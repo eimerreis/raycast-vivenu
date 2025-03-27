@@ -2,7 +2,7 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "vivenu",
   "title": "vivenu",
-  "description": "",
+  "description": "Raycast extension to interact with the vivenu ticketing platform",
   "icon": "vivenu.png",
   "author": "eimerreis",
   "categories": [
@@ -30,6 +30,12 @@
       "name": "create-free-ticket",
       "title": "Create Free Ticket",
       "description": "Creates a free ticket in vivenu",
+      "mode": "view"
+    },
+    {
+      "name": "event-dashboard",
+      "title": "Event Dashboard",
+      "description": "Shows the dashboard for the current event",
       "mode": "view"
     }
   ],

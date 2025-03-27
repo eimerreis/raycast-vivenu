@@ -105,7 +105,7 @@ export interface Row {
   locationCity: string;
   locationPostal: string;
   locationCountry: string;
-  start: Date;
+  start: string;
   end: Date;
   timezone: string;
   sellStart: Date;

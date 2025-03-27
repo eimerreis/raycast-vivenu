@@ -11,10 +11,11 @@ const headers = {
 
 /** ⬇️ Tickets ⬇️ */
 
-export const GetLatestTickets = async (status: TicketStatus = TicketStatus.Valid) => {
-  const response: VivenuTicketsResponse = await fetch(`${baseUrl}/tickets?status=${status}`, { headers }).then((res) =>
-    res.json(),
-  );
+export const GetLatestTickets = async (status: TicketStatus = TicketStatus.Valid, eventIds?: string[]) => {
+  const response: VivenuTicketsResponse = await fetch(
+    `${baseUrl}/tickets?status=${status}${eventIds ? `&event=${eventIds.join(",")}` : ""}`,
+    { headers },
+  ).then((res) => res.json());
   return response;
 };
 
@@ -45,8 +46,6 @@ export const SendTicketMail = async (ticketId: string, email: string) => {
   }).then((res) => res.json());
   return response;
 };
-
-
 
 /** ⬇️ Events ⬇️ */
 
