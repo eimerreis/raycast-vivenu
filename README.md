@@ -13,7 +13,7 @@ This is a [Raycast](https://raycast.com) extension for interacting with the [Viv
 
 Shows the latest tickets for the current account. You can filter the tickets by status.
 
-[![Show Tickets](./metadata/show-tickets.png)](./assets/show-tickets.png)
+[![Show Tickets](./metadata/show-tickets.png)](./metadata/show-tickets.png)
 
 You can then either:
 
@@ -25,6 +25,15 @@ You can then either:
 
 Creates a free ticket for the current account.
 
-[![Create Free Ticket](./metadata/create-free-ticket.png)](./assets/create-free-ticket.png)
+[![Create Free Ticket](./metadata/create-free-ticket.png)](./metadata/create-free-ticket.png)
 
 - You can specify the event, the ticket type, and the email address of the ticket holder.
+
+### Event Dashboard
+
+- Shows some KPIs for a seleted event
+- Shows the tickets sold per day
+- Shows tickets sold yesterday
+- Shows overall tickets sold
+
+[![Event Dashboard](./metadata/dashboard.png)](./metadata/dashboard.png)

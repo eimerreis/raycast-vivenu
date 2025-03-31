@@ -1,33 +1,31 @@
-import { Grid } from "@raycast/api";
-import { KpiPercentageBar } from "./KpiPercentageBar";
+import { PercentageGridItem } from "../components/percentage-grid-item";
 
-export const TicketsPerDayKPI = (totalCapacity: number, totalTicketsSold: number, eventDate: string) => {
+const getTicketsPerDayKPI = (totalCapacity: number, totalTicketsSold: number, eventDate: string) => {
   const daysUntilEvent = (new Date(eventDate).getTime() - new Date().getTime()) / 86400000;
   const remainingCapacity = totalCapacity - totalTicketsSold;
-  const ticketsPerDay = (remainingCapacity / daysUntilEvent)
+  const ticketsPerDay = remainingCapacity / daysUntilEvent;
 
   return { ticketsPerDay };
 };
 
-export const TicketsPerDayTile = ({
-  selectedEvent,
-  eventTickets,
-  ticketsSoldToday,
-}: {
+type Props = {
   selectedEvent?: { maxAmount: number; start: string };
   eventTickets?: { total: number };
   ticketsSoldToday?: number;
-}) => {
-  if (!selectedEvent || !eventTickets || !ticketsSoldToday) return null;
+  title: string;
+};
 
-  const { ticketsPerDay } = TicketsPerDayKPI(selectedEvent?.maxAmount, eventTickets?.total, selectedEvent?.start);
-  const percentage = ticketsSoldToday / ticketsPerDay;
+export const TicketsPerDayTile: React.FC<Props> = ({ selectedEvent, eventTickets, ticketsSoldToday, title }) => {
+  if (!selectedEvent || !eventTickets) return null;
+
+  const { ticketsPerDay } = getTicketsPerDayKPI(selectedEvent?.maxAmount, eventTickets?.total, selectedEvent?.start);
+  const percentage = !ticketsSoldToday ? 0 : ticketsSoldToday / ticketsPerDay;
 
   return (
-    <Grid.Item
-      title={"Sold today"}
+    <PercentageGridItem
+      percentage={percentage}
+      title={title}
       subtitle={`${ticketsSoldToday} / ${ticketsPerDay.toFixed(0)}`}
-      content={{ source: KpiPercentageBar(percentage) }}
     />
   );
 };

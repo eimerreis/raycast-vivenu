@@ -1,8 +1,9 @@
-import { Color, Grid, Clipboard } from "@raycast/api";
+import { Grid } from "@raycast/api";
 import { GetEvents, GetLatestTickets } from "./lib/vivenu/api";
 import { useCachedPromise, usePromise } from "@raycast/utils";
 import React from "react";
 import { TicketsPerDayTile } from "./lib/dashboard/tickets-per-day-kpi";
+import { PercentageGridItem } from "./lib/components/percentage-grid-item";
 
 export default function Command() {
   const { data: events, isLoading } = useCachedPromise(GetEvents);
@@ -25,13 +26,34 @@ export default function Command() {
         </Grid.Dropdown>
       }
     >
-      <TicketsPerDayTile
-        eventTickets={eventTickets}
-        selectedEvent={selectedEvent}
-        ticketsSoldToday={
-          eventTickets?.rows.filter((x) => new Date(x.createdAt).getDate() === new Date().getDate()).length
-        }
-      />
+      <Grid.Section title="Per Day">
+        <TicketsPerDayTile
+          title="Today"
+          eventTickets={eventTickets}
+          selectedEvent={selectedEvent}
+          ticketsSoldToday={
+            eventTickets?.rows.filter((x) => new Date(x.createdAt).getDate() === new Date().getDate()).length
+          }
+        />
+
+        <TicketsPerDayTile
+          title="Yesterday"
+          eventTickets={eventTickets}
+          selectedEvent={selectedEvent}
+          ticketsSoldToday={
+            eventTickets?.rows.filter((x) => new Date(x.createdAt).getDate() === new Date().getDate() - 1).length
+          }
+        />
+      </Grid.Section>
+      <Grid.Section title="Overall">
+        {eventTickets && (
+          <PercentageGridItem
+            title="Tickets sold"
+            subtitle={`${eventTickets!.total} / ${selectedEvent!.maxAmount}`}
+            percentage={eventTickets!.total / selectedEvent!.maxAmount}
+          />
+        )}
+      </Grid.Section>
     </Grid>
   );
 }
